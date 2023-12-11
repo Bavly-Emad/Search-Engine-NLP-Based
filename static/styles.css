@@ -1,0 +1,22 @@
+.movie-card{
+    background-color: rgb(235, 231, 231); 
+    margin: 5px;
+    padding: 15px;
+    width: 50%; 
+    border-radius: 10px
+}
+.result-wrapper{
+    position: absolute;
+    left: 5%;
+    top: 30%; 
+    word-wrap: normal;
+    margin-right: auto
+}
+.front-form-layout{
+    text-align: center;
+    margin-top: 15%;
+    font-family: Constantia, "Lucida Bright", "DejaVu Serif", Georgia, "serif"
+
+}
+
+  

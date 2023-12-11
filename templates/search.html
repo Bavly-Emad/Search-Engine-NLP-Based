@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='cam.ico') }}">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
+		</script>  
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
+		</script>  
+		
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+			rel="stylesheet" type="text/css" />  
+
+		<title>Movie search engine</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Caveat|Covered+By+Your+Grace|Gloria+Hallelujah|Kaushan+Script|Marck+Script|Satisfy|Shadows+Into+Light|Yellowtail" rel="stylesheet">
+	</head>
+
+	<body onload="highlight()" >
+
+		<div style="text-align: center; font-family: Constantia">
+			<h2>old movies mini search engine 📽</h2>			
+		</div>
+
+		<br />
+		<br />
+
+		<div class="form-group" style="position:absolute; left: 50%;">
+		<form method="POST" action="/Search" onsubmit="saveQueryForSuggestion()">
+			
+
+				<input id="search" oninput="autoSuggest()" style="height: 30px; width: 300px;" type="text" value="{{ request.form['search_box'] }}" name="search_box" autofocus autocomplete="on"/>		
+				<input style=" font-size: 13px; text-align: center; font-weight: bold" class="btn btn-primary" type="submit" name="search" value="Search"  />
+				<select  id="select_box" name="select_box">
+					<option value="k">keyword</option>
+					<option value="s">semantic</option>
+				  </select>
+			
+		</form>
+		</div>
+
+		<div class="result-wrapper">
+			<p>Found top {{docs|length}} results in {{took}} seconds..</p>
+			<br />
+		
+			{% if not docs: %}
+			<p>No results found. Please enter an accurate query.</p>
+		   {% else : %}
+			{% for  doc in (docs) %}
+
+		<div id="x">
+        <div class="movie-card">
+
+			<h1> <a href="https://www.imdb.com/title/{{doc['imdb_id']}}/">{{ loop.index0 + 1 }}- {{ doc['original_title'] }}</a>  </h1> 
+			<span>{{ doc.get('release_date', '2222')[0:4] }}</span>
+			<p class="boxa" style="width: 50%;"> {{ doc['overview']}} </p>
+            <img src="https://image.tmdb.org/t/p/w200/{{doc['poster_path']}}" alt="">
+
+		</div>    
+        </div>   
+			{% endfor %}
+			{% endif %}
+		
+		</div>
+
+		<script src="../static/script.js">
+		
+		</script>
+</body>
+</html>
